@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Hello</h1>
+    <p><button onClick=myMove()>Click me</button></p>
+    <div class="container" id="cover">
+        <div class="animation" id="animate"></div>
+    </div>
+</body>
+<style>
+    .container {
+        width: 360px;
+        height: 360px;
+        position: relative;
+        background-color: yellow;
+    }
+    
+    .animation {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        background-color: red;
+    }
+</style>
+<script>
+    let myMove = () => {
+        let id = null;
+        const elem = document.getElementById("animate");
+        var pos = 0;
+        var pos_circle = 0;
+        clearInterval(id);
+        id = setInterval(left_to_right, 1);
+        let id2 = null;
+
+        function left_to_right() {
+            // pos = pos_circle;
+
+            if (pos == 340 - pos_circle) {
+                clearInterval(id);
+                if (340 - pos_circle > 170) {
+                    id2 = setInterval(top_to_bot, 1);
+                } else {
+                    id2 = setInterval(bot_to_top, 1);
+                }
+
+            } else {
+                pos++;
+                // console.log(pos);
+                elem.style.left = pos + "px";
+            }
+        }
+
+        function top_to_bot() {
+            // console.log(pos);
+            if (pos != pos_circle) {
+                pos--;
+                elem.style.top = "auto";
+                elem.style.bottom = pos + "px";
+
+            } else {
+                clearInterval(id2)
+                id2 = setInterval(right_to_left, 1);
+                console.log("start right_to_left");
+            }
+        }
+
+        function right_to_left() {
+
+
+            if (pos == 340 - pos_circle) {
+                clearInterval(id2)
+                id2 = setInterval(bot_to_top, 1);
+            } else {
+                pos++;
+                elem.style.left = "auto";
+                elem.style.right = pos + "px";
+                // console.log(pos);
+            }
+        }
+
+        function bot_to_top() {
+            if (pos != pos_circle) {
+                pos--;
+                elem.style.bottom = "auto";
+                elem.style.top = pos + "px";
+
+            } else {
+                clearInterval(id2);
+                pos_circle += 10;
+                pos = pos_circle;
+                id = setInterval(left_to_right, 1);
+                // console.log("start right_to_left");
+                console.log(pos);
+            }
+        }
+    }
+</script>
+
+</html>
